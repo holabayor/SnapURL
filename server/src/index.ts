@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import { Server } from './server';
+import UrlRouter from './routes/url.route';
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV.trim() !== 'production') {
   const fs = require('fs');
@@ -16,6 +17,8 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV.trim() !== 'production') {
 
 // Create an instance of the App class
 const server = new Server();
+
+// server.initializeRoutes([new UrlRouter()]);
 
 // Start the application
 server.start();

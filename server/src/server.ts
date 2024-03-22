@@ -2,6 +2,7 @@ import express, { Express } from 'express';
 import http from 'http';
 import { connectDB } from './config/db';
 import router from './routes';
+import urlRouter from './routes/url.route';
 
 export class Server {
   private app: Express;
@@ -12,11 +13,20 @@ export class Server {
     this.app = express();
     this.port = parseInt(process.env.PORT || '5000');
     this.server = http.createServer(this.app);
+    this.initializeMiddlewares();
     this.initializeRoutes();
   }
 
+  //   public initializeRoutes(route: Routes[]): void {
+  //     this.app.use('/api/v1/', route.router);
+  //   }
+
+  private initializeMiddlewares(): void {
+    this.app.use(express.json());
+  }
+
   private initializeRoutes(): void {
-    this.app.use('/api/v1/', router);
+    this.app.use('/api/v1/', urlRouter);
   }
 
   // Method to start listening on defined port
