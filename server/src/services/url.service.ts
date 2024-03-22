@@ -3,23 +3,27 @@ import Url from '../models/url';
 import { generateId } from '../utils';
 
 export default class UrlService {
-  async generateQR(urlId: string) {
-    console.log('The url id is ', urlId);
+  private async generateQRCode(data: any) {
+    return await QRCode.toDataURL(data);
+  }
+
+  async updateQR(urlId: string) {
     const url = await Url.findOne({ urlId });
-    console.log('The url ', url);
-    const qrCode = await QRCode.toDataURL(url!.shortUrl);
-    console.log(qrCode);
-    if (qrCode) {
-      await Url.updateOne({ urlId }, { qrCode: qrCode });
-      return url;
+    if (url && !url?.qrCode) {
+      const qrCode = await this.generateQRCode(url.shortUrl);
+      return await Url.findOneAndUpdate(
+        { urlId },
+        { $set: { qrCode: qrCode } },
+        { new: true }
+      );
     }
-    return null;
+    return url;
   }
 
   async getUrlById(urlId: string) {
     const url = await Url.findOne({ urlId });
     if (url) {
-      await Url.updateOne({ urlId }, { $inc: { click: 1 } });
+      await Url.updateOne({ urlId }, { $inc: { click: 1 } }, { new: true });
       return url;
     }
     return null;

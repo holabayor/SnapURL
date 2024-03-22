@@ -14,21 +14,26 @@ export default class UrlController extends BaseController {
 
   async shortenUrl(req: Request, res: Response): Promise<any> {
     const originalUrl = (req.body as any).originalUrl;
+
     const data = await this.urlService.shortenUrl(this.baseUrl, originalUrl);
     this.success(res, 'Successfully shortened URL', 200, data);
   }
 
   async getUrl(req: Request, res: Response): Promise<any> {
     const { urlId } = req.params;
+
     const data = await this.urlService.getUrlById(urlId);
-    // res.redirect(url!.originalUrl);
+    if (!data) return this.error(res, 'Can not retrieve URL', 404, data);
+
     this.success(res, 'Successfully retrieved URL', 200, data);
   }
 
-  async generateQR(req: Request, res: Response) {
-    console.log(req.params);
+  async updateQR(req: Request, res: Response) {
     const { urlId } = req.params as any;
-    const data = await this.urlService.generateQR(urlId);
-    this.success(res, 'Successfully shortened URL', 200, data);
+
+    const data = await this.urlService.updateQR(urlId);
+    if (!data) return this.error(res, 'Invalid url Id', 404);
+
+    this.success(res, 'QR Code generated', 200, data);
   }
 }

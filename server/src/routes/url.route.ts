@@ -64,7 +64,7 @@ class UrlRoutes {
     );
     this.router.patch(
       `${this.path}/:urlId/qr`,
-      useWrapper(this.urlController.generateQR.bind(this.urlController))
+      useWrapper(this.urlController.updateQR.bind(this.urlController))
     );
   }
 }
