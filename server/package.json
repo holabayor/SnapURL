@@ -1,0 +1,32 @@
+{
+  "name": "snap-url",
+  "version": "1.0.0",
+  "description": "The server for snapurl. A link shortening tool.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.1",
+    "joi": "^17.12.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.97",
+    "mongoose": "^8.2.3",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  },
+  "keywords": [
+    "altschool",
+    "node.js",
+    "typescript",
+    "project"
+  ],
+  "author": "Aanuoluwapo Liasu",
+  "license": "ISC"
+}
