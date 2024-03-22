@@ -1,8 +1,7 @@
-import express, { Express } from 'express';
+import express, { Express, Router } from 'express';
 import http from 'http';
 import { connectDB } from './config/db';
-import router from './routes';
-import urlRouter from './routes/url.route';
+import routes from './routes/index';
 
 export class Server {
   private app: Express;
@@ -14,7 +13,7 @@ export class Server {
     this.port = parseInt(process.env.PORT || '5000');
     this.server = http.createServer(this.app);
     this.initializeMiddlewares();
-    this.initializeRoutes();
+    this.initializeRoutes(routes);
   }
 
   //   public initializeRoutes(route: Routes[]): void {
@@ -25,8 +24,8 @@ export class Server {
     this.app.use(express.json());
   }
 
-  private initializeRoutes(): void {
-    this.app.use('/api/v1/', urlRouter);
+  private initializeRoutes(routes: Router[]): void {
+    routes.forEach((route: Router) => this.app.use('/api/v1/', route));
   }
 
   // Method to start listening on defined port

@@ -18,6 +18,9 @@ const UrlSchema = new mongoose.Schema({
     // required: true,
     default: 0,
   },
+  qrCode: {
+    type: String,
+  },
   date: {
     type: String,
     default: Date.now(),
