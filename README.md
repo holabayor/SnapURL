@@ -24,21 +24,21 @@ To install SnapURL, follow these steps:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/SnapURL.git
+git clone https://github.com/holabayor/SnapURL.git
 cd SnapURL
 ```
 
 2. Install backend dependencies:
 
 ```
-cd backend
+cd server
 npm install
 ```
 
 3. Install frontend dependencies:
 
 ```
-cd ../frontend
+cd ../client
 npm install
 ```
 
@@ -56,14 +56,14 @@ To run SnapURL, you'll need to start both the backend and frontend servers.
 1. Start the backend server:
 
 ```
-cd backend
+cd server 
 npm run dev
 ```
 
 In a new terminal, start the frontend server:
 
 ```
-cd frontend
+cd client 
 npm run dev
 ```
 
