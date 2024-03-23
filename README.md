@@ -46,7 +46,7 @@ npm install
 
 ```
 MONGODB_URI=your_mongodb_uri
-PORT=5000
+PORT=8000
 ```
 
 ## Running SnapURL
