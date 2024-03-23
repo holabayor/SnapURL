@@ -42,7 +42,7 @@ cd ../client
 npm install
 ```
 
-4. Create a .env file in the backend directory with your MongoDB URI and any other environment variables:
+4. Create a .env file in the backend directory with your MongoDB URI and any other environment variables. See the .env.example file:
 
 ```
 MONGODB_URI=your_mongodb_uri
