@@ -30,21 +30,21 @@ cd SnapURL
 
 2. Install backend dependencies:
 
-```
+```bash
 cd server
 npm install
 ```
 
 3. Install frontend dependencies:
 
-```
+```bash
 cd ../client
 npm install
 ```
 
 4. Create a .env file in the backend directory with your MongoDB URI and any other environment variables. See the .env.example file:
 
-```
+```bash
 MONGODB_URI=your_mongodb_uri
 PORT=8000
 ```
@@ -55,14 +55,14 @@ To run SnapURL, you'll need to start both the backend and frontend servers.
 
 1. Start the backend server:
 
-```
+```bash 
 cd server 
 npm run dev
 ```
 
 In a new terminal, start the frontend server:
 
-```
+```bash
 cd client 
 npm run dev
 ```
