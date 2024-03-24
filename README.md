@@ -24,29 +24,29 @@ To install SnapURL, follow these steps:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/SnapURL.git
+git clone https://github.com/holabayor/SnapURL.git
 cd SnapURL
 ```
 
 2. Install backend dependencies:
 
-```
-cd backend
+```bash
+cd server
 npm install
 ```
 
 3. Install frontend dependencies:
 
-```
-cd ../frontend
+```bash
+cd ../client
 npm install
 ```
 
-4. Create a .env file in the backend directory with your MongoDB URI and any other environment variables:
+4. Create a .env file in the backend directory with your MongoDB URI and any other environment variables. See the .env.example file:
 
-```
+```bash
 MONGODB_URI=your_mongodb_uri
-PORT=5000
+PORT=8000
 ```
 
 ## Running SnapURL
@@ -55,15 +55,15 @@ To run SnapURL, you'll need to start both the backend and frontend servers.
 
 1. Start the backend server:
 
-```
-cd backend
+```bash 
+cd server 
 npm run dev
 ```
 
 In a new terminal, start the frontend server:
 
-```
-cd frontend
+```bash
+cd client 
 npm run dev
 ```
 
