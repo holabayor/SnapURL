@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import UrlService from './../services/url.service';
 import BaseController from './base.controller';
+import { shortenUrlSchema, urlIdSchema } from '../middlewares/validateSchema';
 
 export default class UrlController extends BaseController {
   private urlService: UrlService;
@@ -13,13 +14,20 @@ export default class UrlController extends BaseController {
   }
 
   async shortenUrl(req: Request, res: Response): Promise<any> {
-    const originalUrl = (req.body as any).originalUrl;
+    const error = this.validate(shortenUrlSchema, req.body);
+    if (error) return this.error(res, error, 422);
 
-    const data = await this.urlService.shortenUrl(this.baseUrl, originalUrl);
+    const data = await this.urlService.shortenUrl(
+      this.baseUrl,
+      req.body.originalUrl as string
+    );
     this.success(res, 'Successfully shortened URL', 200, data);
   }
 
   async getUrl(req: Request, res: Response): Promise<any> {
+    const error = this.validate(urlIdSchema, req.params);
+    if (error) return this.error(res, error, 422);
+
     const { urlId } = req.params;
 
     const data = await this.urlService.getUrlById(urlId);
@@ -29,6 +37,9 @@ export default class UrlController extends BaseController {
   }
 
   async updateQR(req: Request, res: Response) {
+    const error = this.validate(urlIdSchema, req.params);
+    if (error) return this.error(res, error, 422);
+
     const { urlId } = req.params as any;
 
     const data = await this.urlService.updateQR(urlId);

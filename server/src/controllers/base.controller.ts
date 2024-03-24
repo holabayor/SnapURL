@@ -4,4 +4,12 @@ export default class BaseController extends SendResponse {
   constructor() {
     super();
   }
+
+  validate(schema: any, data: any) {
+    const { error } = schema.validate(data);
+    if (error) {
+      return error.details[0].message.replace(/["]/g, '');
+    }
+    return null;
+  }
 }
