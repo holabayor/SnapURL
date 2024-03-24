@@ -16,3 +16,22 @@ export const paginationSchema = Joi.object({
   page: Joi.number().integer().min(1),
   limit: Joi.number().integer().min(1),
 });
+
+// USER SCHEMAS
+
+export const registerUserSchema = Joi.object({
+  firstName: Joi.string().min(2),
+  lastName: Joi.string().min(2),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+});
+
+export const userIdSchema = Joi.object({
+  urlId: Joi.string().uuid().required(),
+});
+export const userSchema = Joi.object({
+  firstName: Joi.string().min(2),
+  lastName: Joi.string().min(2),
+  email: Joi.string().email().required(),
+  profilePicture: Joi.string(),
+});

@@ -65,4 +65,15 @@ export default class UrlController extends BaseController {
 
     this.success(res, 'QR Code generated', 200, data);
   }
+  async updateUrl(req: Request, res: Response) {
+    const error = this.validate(urlIdSchema, req.params);
+    if (error) return this.error(res, error, 422);
+
+    const { urlId } = req.params as any;
+
+    // const data = await this.urlService.updateQR(urlId);
+    // if (!data) return this.error(res, 'Invalid url Id', 404);
+
+    // this.success(res, 'QR Code generated', 200, data);
+  }
 }
