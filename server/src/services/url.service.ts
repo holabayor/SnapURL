@@ -29,6 +29,12 @@ export default class UrlService {
     return null;
   }
 
+  async getAllUrl(page: number, limit: number): Promise<any> {
+    const skip: number = (page - 1) * limit;
+    const urls = await Url.find().skip(skip).limit(limit);
+    return urls;
+  }
+
   async shortenUrl(baseUrl: string, originalUrl: string): Promise<any> {
     if (!originalUrl.startsWith('https://' || 'http://')) {
       originalUrl = 'https://' + originalUrl;

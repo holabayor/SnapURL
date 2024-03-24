@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import UrlService from './../services/url.service';
 import BaseController from './base.controller';
-import { shortenUrlSchema, urlIdSchema } from '../middlewares/validateSchema';
+import {
+  paginationSchema,
+  shortenUrlSchema,
+  urlIdSchema,
+} from '../middlewares/validateSchema';
 
 export default class UrlController extends BaseController {
   private urlService: UrlService;
@@ -32,6 +36,20 @@ export default class UrlController extends BaseController {
 
     const data = await this.urlService.getUrlById(urlId);
     if (!data) return this.error(res, 'Can not retrieve URL', 404, data);
+
+    this.success(res, 'Successfully retrieved URL', 200, data);
+  }
+  async getAllUrl(req: Request, res: Response): Promise<any> {
+    const error = this.validate(paginationSchema, req.query);
+    if (error) return this.error(res, error, 422);
+
+    const { page, limit } = req.query;
+
+    const data = await this.urlService.getAllUrl(
+      Number(page) || 1,
+      Number(limit) || 2
+    );
+    if (!data) return this.error(res, 'No data available', 404, data);
 
     this.success(res, 'Successfully retrieved URL', 200, data);
   }

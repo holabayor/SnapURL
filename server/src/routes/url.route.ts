@@ -16,6 +16,10 @@ class UrlRoutes {
       `${this.path}/:urlId`,
       useWrapper(this.urlController.getUrl.bind(this.urlController))
     );
+    this.router.get(
+      `${this.path}/`,
+      useWrapper(this.urlController.getAllUrl.bind(this.urlController))
+    );
     this.router.post(
       `${this.path}/short`,
       useWrapper(this.urlController.shortenUrl.bind(this.urlController))
