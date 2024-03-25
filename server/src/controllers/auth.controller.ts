@@ -1,19 +1,21 @@
 import { Request, Response } from 'express';
-import UserService from './../services/user.service';
+import AuthService from './../services/auth.service';
+import UserService from '../services/user.service';
 import BaseController from './base.controller';
 import {
-  paginationSchema,
+  loginSchema,
   registerSchema,
   userIdSchema,
-  userSchema,
 } from '../middlewares/validateSchema';
 
-export default class UserController extends BaseController {
+export default class AuthController extends BaseController {
   private userService: UserService;
+  private authService: AuthService;
 
   constructor() {
     super();
     this.userService = new UserService();
+    this.authService = new AuthService();
   }
 
   async getUser(req: Request, res: Response): Promise<any> {
@@ -28,22 +30,7 @@ export default class UserController extends BaseController {
     this.success(res, 'Successfully retrieved UseR', 200, data);
   }
 
-  async getAllUsers(req: Request, res: Response): Promise<any> {
-    const error = this.validate(paginationSchema, req.query);
-    if (error) return this.error(res, error, 422);
-
-    const { page, limit } = req.query;
-
-    const data = await this.userService.getAllUsers(
-      Number(page) || 1,
-      Number(limit) || 2
-    );
-    if (!data) return this.error(res, 'No data available', 404, data);
-
-    this.success(res, 'Successfully retrieved User', 200, data);
-  }
-
-  async createUser(req: Request, res: Response): Promise<any> {
+  async register(req: Request, res: Response): Promise<any> {
     const error = this.validate(registerSchema, req.body);
     if (error) return this.error(res, error, 422);
 
@@ -52,15 +39,13 @@ export default class UserController extends BaseController {
     this.error(res, error.message || 'Internal Error', error.statusCode || 500);
   }
 
-  async updateUser(req: Request, res: Response) {
-    const error = this.validate(userSchema, req.body);
+  async login(req: Request, res: Response): Promise<any> {
+    const error = this.validate(loginSchema, req.body);
     if (error) return this.error(res, error, 422);
 
-    const { user } = req as any;
-
-    const data = await this.userService.updateUser(user.id, req.body);
-    if (!data) return this.error(res, 'Invalid user Id', 404);
-
-    this.success(res, 'QR Code generated', 200, data);
+    const { email, password } = req.body;
+    const data = await this.authService.login(email, password);
+    res.cookie('SESSION', data.token, { httpOnly: true });
+    if (data) return this.success(res, 'Log in successful', 200, data.user);
   }
 }

@@ -20,9 +20,12 @@ const UserSchema = new mongoose.Schema({
   profilePicture: {
     type: String,
   },
-  urls: {
-    type: Number,
-  },
+  urls: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Url',
+    },
+  ],
   lastLoggedIn: {
     type: Date,
   },

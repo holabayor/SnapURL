@@ -1,18 +1,12 @@
 import User from '../models/user';
 import { comparePassword, generateToken, hashPassword } from '../utils';
 
-export default class UserService {
+export default class AuthService {
   async getUserById(id: string) {
     const user = await User.findOne({ id });
     if (user) return user;
     // throw new Error('User not found');
     return null;
-  }
-
-  async getAllUsers(page: number, limit: number): Promise<any> {
-    const skip: number = (page - 1) * limit;
-    const users = await User.find().skip(skip).limit(limit);
-    return users;
   }
 
   async getUserByEmail(email: string) {
@@ -34,11 +28,43 @@ export default class UserService {
   async login(email: string, password: string) {
     const user = await this.getUserByEmail(email);
     if (!user) throw { message: 'User not found', statusCode: 404 };
-    const isValidPassword = await comparePassword(user.password, password);
+
+    const isValidPassword = await comparePassword(password, user.password);
     if (!isValidPassword)
       throw { message: 'Invalid credentials', statusCode: 403 };
-    const token = await generateToken(user);
+    const token = generateToken({ id: user.id, firstName: user.firstName });
     return { token, user };
+  }
+
+  async changePassword(
+    userId: string,
+    oldPassword: string,
+    newPassword: string
+  ) {
+    const user = await this.getUserById(userId);
+    if (!user) throw { message: 'User not found', statusCode: 404 };
+
+    const isValidPassword = await comparePassword(oldPassword, user.password);
+    if (!isValidPassword)
+      throw { message: 'Invalid credentials', statusCode: 403 };
+
+    const hashedPassword = await hashPassword(newPassword);
+
+    const upd = await User.findOneAndUpdate(
+      { id: userId },
+      { password: hashedPassword },
+      { new: true }
+    );
+    return upd;
+  }
+
+  async logout(email: string, password: string) {
+    const user = await this.getUserByEmail(email);
+    if (!user) throw { message: 'User not found', statusCode: 404 };
+    const isValidPassword = await comparePassword(password, user.password);
+    if (!isValidPassword)
+      throw { message: 'Invalid credentials', statusCode: 403 };
+    return user;
   }
 
   async updateUser(id: string, payload: any): Promise<any> {
@@ -54,6 +80,7 @@ export default class UserService {
 
     const hashedPassword = await hashPassword(payload.password);
     // const user = await User.create({ ...payload, hashedPassword });
+    // delete updatedUser!.password;
     return user;
   }
 }

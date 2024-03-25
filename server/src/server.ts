@@ -25,7 +25,7 @@ export class Server {
 
     // Catch all errors
     this.app.all('*', (req, res) => {
-      res.status(404).json({ success: false, message: '404 Not Found' });
+      res.status(404).json({ success: false, message: 'Page not Found' });
     });
   }
 
@@ -37,7 +37,7 @@ export class Server {
 
     // Handle server errors
     this.server.on('error', (error: NodeJS.ErrnoException) => {
-      console.error('❌Server error:', error.message);
+      console.error('❌ Server error:', error.message);
       process.exit(1);
     });
   }

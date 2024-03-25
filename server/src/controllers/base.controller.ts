@@ -5,7 +5,7 @@ export default class BaseController extends SendResponse {
     super();
   }
 
-  validate(schema: any, data: any) {
+  protected validate(schema: any, data: any) {
     const { error } = schema.validate(data);
     if (error) {
       return error.details[0].message.replace(/["]/g, '');
