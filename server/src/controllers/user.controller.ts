@@ -10,12 +10,10 @@ import {
 
 export default class UserController extends BaseController {
   private userService: UserService;
-  private baseUser: string;
 
   constructor() {
     super();
     this.userService = new UserService();
-    this.baseUser = process.env.BASE_UseR as string;
   }
 
   async getUser(req: Request, res: Response): Promise<any> {
@@ -50,7 +48,8 @@ export default class UserController extends BaseController {
     if (error) return this.error(res, error, 422);
 
     const data = await this.userService.createUser(req.body);
-    this.success(res, 'Successfully shortened URL', 200, data);
+    if (data) return this.success(res, 'Successfully shortened URL', 200, data);
+    this.error(res, error.message || 'Internal Error', error.statusCode || 500);
   }
 
   async updateUser(req: Request, res: Response) {

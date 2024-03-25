@@ -24,7 +24,7 @@ export default class UserService {
   async createUser(payload: any): Promise<any> {
     const userExists = await this.getUserByEmail(payload.email);
 
-    if (userExists) throw new Error('User already exists');
+    if (userExists) throw { message: 'User already exists', statusCode: 409 };
 
     const hashedPassword = await hashPassword(payload.password);
     const user = await User.create({ ...payload, password: hashedPassword });
@@ -33,9 +33,10 @@ export default class UserService {
 
   async login(email: string, password: string) {
     const user = await this.getUserByEmail(email);
-    if (!user) return null;
+    if (!user) throw { message: 'User not found', statusCode: 404 };
     const isValidPassword = await comparePassword(user.password, password);
-    if (!isValidPassword) return null;
+    if (!isValidPassword)
+      throw { message: 'Invalid credentials', statusCode: 403 };
     return user;
   }
 

@@ -16,16 +16,17 @@ export class Server {
     this.initializeRoutes(routes);
   }
 
-  //   public initializeRoutes(route: Routes[]): void {
-  //     this.app.use('/api/v1/', route.router);
-  //   }
-
   private initializeMiddlewares(): void {
     this.app.use(express.json());
   }
 
   private initializeRoutes(routes: Router[]): void {
     routes.forEach((route: Router) => this.app.use('/api/v1/', route));
+
+    // Catch all errors
+    this.app.all('*', (req, res) => {
+      res.status(404).json({ success: false, message: '404 Not Found' });
+    });
   }
 
   // Method to start listening on defined port

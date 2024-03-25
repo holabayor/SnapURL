@@ -5,6 +5,11 @@ export default function useWrapper(fn: Function) {
     try {
       await fn(req, res, next);
     } catch (error) {
+      console.log('Caught in the wrapper');
+      const code = (error as any).statusCode || 500;
+      res
+        .status(code)
+        .json({ success: false, message: (error as any).message });
       next(error);
     }
   };
