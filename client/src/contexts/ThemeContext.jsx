@@ -20,13 +20,8 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(getInitialTheme);
 
   useEffect(() => {
-    console.log(
-      'Default theme set on the device is ',
-      localStorage.getItem('theme')
-    );
     localStorage.setItem('theme', theme);
     document.documentElement.classList.toggle('dark', theme === 'dark');
-    console.log('Local theme set on the device is ', theme);
   }, [theme]);
 
   return (
