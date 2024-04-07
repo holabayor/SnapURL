@@ -8,7 +8,7 @@ const Popup = ({ className, children, show, ...props }) => {
   return (
     <div
       className={cn(
-        `absolute max-w-56 px-4 py-2 rounded-md shadow-lg bg-secondary ring-1 ring-black ring-opacity-5 z-50 transition-all ${
+        `absolute max-w-64 max-h-52 overflow-y-auto px-4 py-2 text-sm rounded-md shadow-lg bg-secondary z-50 transition-all scrollbar-hide ${
           show ? ' translate-y-0 opacity-100' : 'opacity-0 invisible'
         }`,
         className

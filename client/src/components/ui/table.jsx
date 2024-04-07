@@ -1,4 +1,3 @@
-// src/components/Table.jsx
 import React from 'react';
 import { cn } from '@/lib/utils';
 
@@ -44,13 +43,10 @@ const TableHeaderCell = ({ className, children, ...props }) => (
 
 const TableCell = ({ className, children, ...props }) => (
   <td
-    className={cn(
-      'flex-inline flex-nowrap items-center px-6 py-4 text-left whitespace-nowrap text-sm',
-      className
-    )}
+    className={cn('px-6 py-4 text-left whitespace-nowrap text-sm', className)}
     {...props}
   >
-    {children}
+    <div className="flex items-center gap-2">{children}</div>
   </td>
 );
 

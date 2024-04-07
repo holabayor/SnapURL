@@ -1,4 +1,4 @@
-import { CopyCheck, Link, Pen, Trash } from 'lucide-react';
+import { Copy, CopyCheck, Link, Pen, Trash, Unlink } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -27,6 +27,52 @@ const dataKeys =
 const headers = dataKeys.map(formatHeader);
 
 const History = () => {
+  const copyToClipboard = async (value) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      console.log('Link copied to clipboard:', value);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  const columnIcons = {
+    status: (value) => {
+      switch (value) {
+        case 'active':
+          return (
+            <>
+              <Link size={14} strokeWidth={1} className="text-green-500" />{' '}
+              Active
+            </>
+          );
+        case 'inactive':
+          return (
+            <>
+              <Unlink size={14} strokeWidth={1} className="text-yellow-500" />
+              Inactive
+            </>
+          );
+
+        default:
+          return null;
+      }
+    },
+    shortLink: (value) => {
+      return (
+        <>
+          {value}
+          <Copy
+            onClick={() => copyToClipboard(value)}
+            size={18}
+            strokeWidth={1.5}
+            className="ml-auto cursor-pointer hover:scale-125 transition-all"
+          />
+        </>
+      );
+    },
+  };
+
   return (
     <Table>
       <TableHead>
@@ -41,12 +87,12 @@ const History = () => {
         {data.map((row, rowIndex) => (
           <TableRow key={rowIndex}>
             {dataKeys.map((key) => (
-              <TableCell key={`${rowIndex}-${key}`} className="gap-2">
+              <TableCell key={`${rowIndex}-${key}`}>
                 {/* Custom rendering for specific columns can go here */}
-                {row[key]}
+                {columnIcons[key] ? columnIcons[key](row[key]) : row[key]}
               </TableCell>
             ))}
-            <TableCell className="gap-2">
+            <TableCell>
               <Pen size={14} strokeWidth={1} />
               <Trash size={14} strokeWidth={1} />
             </TableCell>

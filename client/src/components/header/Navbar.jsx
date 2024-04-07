@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { Bell, BellOff, ChevronDown, ChevronUp, LogIn } from 'lucide-react';
+import {
+  Bell,
+  BellOff,
+  ChevronDown,
+  ChevronUp,
+  LogIn,
+  LogOut,
+} from 'lucide-react';
 import Button from '@/components/ui/button';
 import Popup from '../ui/popup';
 import { user, notifications } from '@/data';
@@ -35,7 +42,9 @@ const Navbar = () => {
               <a href="#">Profile Settings</a>
             </div>
             <div>
-              <a href="#">Log out</a>
+              <a href="#" className="flex flex-nowrap items-center gap-2">
+                Log out <LogOut size={14} strokeWidth={1.5} />
+              </a>
             </div>
           </Popup>
           <Button
