@@ -19,6 +19,14 @@ module.exports = {
       '4xl': '2.441rem',
       '5xl': '3.052rem',
     },
+    screens: {
+      xs: '480px',
+      sm: '640px', // Small devices (mobiles)
+      md: '768px', // Medium devices (tablets)
+      lg: '1024px', // Large devices (desktops)
+      xl: '1280px', // Extra large devices (large desktops)
+      '2xl': '1536px',
+    },
     container: {
       center: true,
       padding: '2rem',

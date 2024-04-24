@@ -1,4 +1,4 @@
-import { Copy, CopyCheck, Link, Pen, Trash, Unlink } from 'lucide-react';
+import { Link, Pen, Trash, Unlink } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -8,6 +8,7 @@ import {
   TableRow,
 } from './ui/table';
 import { data } from '../data';
+import CopyButton from './ui/CopyButton';
 
 // Utility function to convert camelCase or snake_case to Normal Case
 const formatHeader = (header) => {
@@ -27,29 +28,28 @@ const dataKeys =
 const headers = dataKeys.map(formatHeader);
 
 const History = () => {
-  const copyToClipboard = async (value) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      console.log('Link copied to clipboard:', value);
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
-  };
-
   const columnIcons = {
     status: (value) => {
       switch (value) {
         case 'active':
           return (
             <>
-              <Link size={14} strokeWidth={1} className="text-green-500" />{' '}
+              <span className="bg-green-300 dark:bg-green-700 p-2 border rounded-full">
+                <Link size={16} strokeWidth={1.5} className="" />{' '}
+              </span>
               Active
             </>
           );
         case 'inactive':
           return (
             <>
-              <Unlink size={14} strokeWidth={1} className="text-yellow-500" />
+              <span className="bg-yellow-200 dark:bg-yellow-300 dark:bg-opacity-35 p-2 border rounded-full opacity-60">
+                <Unlink
+                  size={16}
+                  strokeWidth={1.5}
+                  className=" dark:text-yellow-300 "
+                />
+              </span>
               Inactive
             </>
           );
@@ -58,16 +58,20 @@ const History = () => {
           return null;
       }
     },
-    shortLink: (value) => {
+    shortLink: (value, rowIndex) => {
       return (
         <>
           {value}
-          <Copy
-            onClick={() => copyToClipboard(value)}
-            size={18}
-            strokeWidth={1.5}
-            className="ml-auto cursor-pointer hover:scale-125 transition-all"
-          />
+          <CopyButton content={value} index={rowIndex} />
+        </>
+      );
+    },
+    originalLink: (value) => {
+      const faviconURL = `https://www.google.com/s2/favicons?domain=${value}`;
+      return (
+        <>
+          <img src={faviconURL} alt="favicon" className="w-6 h-6" />
+          {value}
         </>
       );
     },
@@ -76,7 +80,7 @@ const History = () => {
   return (
     <Table>
       <TableHead>
-        <TableRow>
+        <TableRow className="bg-primary">
           {headers.map((header) => (
             <TableHeaderCell key={header}>{header}</TableHeaderCell>
           ))}
@@ -85,16 +89,24 @@ const History = () => {
       </TableHead>
       <TableBody>
         {data.map((row, rowIndex) => (
-          <TableRow key={rowIndex}>
+          <TableRow
+            key={rowIndex}
+            className="border-b border-b-foreground border-b-opacity-85 hover:bg-slate-100 dark:hover:bg-slate-900"
+          >
             {dataKeys.map((key) => (
               <TableCell key={`${rowIndex}-${key}`}>
-                {/* Custom rendering for specific columns can go here */}
-                {columnIcons[key] ? columnIcons[key](row[key]) : row[key]}
+                {columnIcons[key]
+                  ? columnIcons[key](row[key], rowIndex)
+                  : row[key]}
               </TableCell>
             ))}
             <TableCell>
-              <Pen size={14} strokeWidth={1} />
-              <Trash size={14} strokeWidth={1} />
+              <span className="p-2 border rounded-full">
+                <Pen size={16} strokeWidth={1.5} className="" />
+              </span>
+              <span className="p-2 border rounded-full">
+                <Trash size={16} strokeWidth={1.5} className="" />
+              </span>
             </TableCell>
           </TableRow>
         ))}

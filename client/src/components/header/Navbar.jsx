@@ -1,23 +1,20 @@
 import { useState } from 'react';
-import {
-  Bell,
-  BellOff,
-  ChevronDown,
-  ChevronUp,
-  LogIn,
-  LogOut,
-} from 'lucide-react';
+import { Bell, BellOff, ChevronDown, LogIn, LogOut } from 'lucide-react';
 import Button from '@/components/ui/button';
-import Popup from '../ui/popup';
-import { user, notifications } from '@/data';
+import { user as UserData, notifications } from '@/data';
 import NotificationsPopup from '../NotificationsPopup';
+import UserPopup from '../UserPopup';
+import ThemeToggle from '../ThemeToggle';
 
 const Navbar = () => {
   const [showUserPopup, setShowUserPopup] = useState(false);
   const [showBellPopup, setShowBellPopup] = useState(false);
 
+  const user = '';
+
   return (
-    <nav className="flex gap-2">
+    <nav className="relative flex gap-2 items-center">
+      <ThemeToggle />
       {user ? (
         <>
           <Button
@@ -37,16 +34,11 @@ const Navbar = () => {
               }`}
             />
           </Button>
-          <Popup show={showUserPopup} className="top-16 right-16">
-            <div>
-              <a href="#">Profile Settings</a>
-            </div>
-            <div>
-              <a href="#" className="flex flex-nowrap items-center gap-2">
-                Log out <LogOut size={14} strokeWidth={1.5} />
-              </a>
-            </div>
-          </Popup>
+          <UserPopup
+            show={showUserPopup}
+            onClose={() => setShowUserPopup(false)}
+          />
+
           <Button
             size={'icon'}
             onClick={() => setShowBellPopup(!showBellPopup)}
@@ -67,11 +59,15 @@ const Navbar = () => {
           <NotificationsPopup
             show={showBellPopup}
             notifications={notifications}
+            onClose={() => setShowBellPopup(false)}
           />
         </>
       ) : (
         <>
-          <Button variant={'secondary'} className="text-white gap-2">
+          <Button
+            variant={'secondary'}
+            className="border-2 border-border gap-2"
+          >
             Login
             <LogIn size={16} strokeWidth={1.5} />
           </Button>

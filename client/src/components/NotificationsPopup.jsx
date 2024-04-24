@@ -1,9 +1,9 @@
 import React from 'react';
 import Popup from './ui/popup';
 
-const NotificationsPopup = ({ notifications, show }) => {
+const NotificationsPopup = ({ notifications, show, onClose }) => {
   return (
-    <Popup show={show} className="top-16 right-4 w-52 h-56">
+    <Popup show={show} onClose={onClose} className="top-16 right-4 w-52 h-56">
       <h3 className="font-semibold border-b border-primary">Notifications</h3>
       {notifications ? (
         <ul>

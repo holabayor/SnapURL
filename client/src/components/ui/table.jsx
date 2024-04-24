@@ -3,8 +3,14 @@ import { cn } from '@/lib/utils';
 
 const Table = ({ className, children, ...props }) => {
   return (
-    <div className="overflow-x-auto">
-      <table className={cn('min-w-full table-auto', className)} {...props}>
+    <div className="min-w-full table-auto rounded-lg overflow-auto">
+      <table
+        className={cn(
+          // 'min-w-full table-auto rounded-lg overflow-hidden',
+          className
+        )}
+        {...props}
+      >
         {children}
       </table>
     </div>
@@ -12,7 +18,7 @@ const Table = ({ className, children, ...props }) => {
 };
 
 const TableHead = ({ className, children, ...props }) => (
-  <thead className={cn('bg-', className)} {...props}>
+  <thead className={cn('', className)} {...props}>
     {children}
   </thead>
 );
@@ -32,7 +38,7 @@ const TableRow = ({ className, children, ...props }) => (
 const TableHeaderCell = ({ className, children, ...props }) => (
   <th
     className={cn(
-      'px-6 py-3 text-left font-semibold whitespace-nowrap',
+      'px-4 lg:px-6 py-3 md:py-4 text-left font-semibold whitespace-nowrap',
       className
     )}
     {...props}
@@ -43,7 +49,10 @@ const TableHeaderCell = ({ className, children, ...props }) => (
 
 const TableCell = ({ className, children, ...props }) => (
   <td
-    className={cn('px-6 py-4 text-left whitespace-nowrap text-sm', className)}
+    className={cn(
+      'px-4 lg:px-6 py-2 md:py-4 text-left whitespace-nowrap text-sm',
+      className
+    )}
     {...props}
   >
     <div className="flex items-center gap-2">{children}</div>

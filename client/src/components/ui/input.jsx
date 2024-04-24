@@ -14,18 +14,18 @@ const Input = ({ className, type, ...props }) => {
 };
 Input.displayName = 'Input';
 
-const SearchBox = ({ className, ...props }) => {
-  return (
-    <input
-      type="search"
-      className={cn(
-        'flex h:8 sm:h-11 w-full outline-none ring-offset-0',
-        className
-      )}
-      {...props}
-    />
-  );
-};
-SearchBox.displayName = 'SearchBox';
+// const SearchBox = ({ className, ...props }) => {
+//   return (
+//     <input
+//       type="search"
+//       className={cn(
+//         'flex h:8 sm:h-11 w-full outline-none ring-offset-0',
+//         className
+//       )}
+//       {...props}
+//     />
+//   );
+// };
+// SearchBox.displayName = 'SearchBox';
 
-export { Input, SearchBox };
+export { Input };

@@ -8,7 +8,7 @@ export const data = [
   {
     id: 1,
     shortLink: 'https://sho.rt/1abcd',
-    originalLink: 'https://example.com/long-url-path-1',
+    originalLink: 'https://twitter.com',
     qrCode: 'https://example.com/qrcode/1abcd',
     clicks: 120,
     status: 'active',
@@ -17,7 +17,7 @@ export const data = [
   {
     id: 2,
     shortLink: 'https://sho.rt/2efgh',
-    originalLink: 'https://example.com/long-url-path-2',
+    originalLink: 'https://whatsapp.com/long-url-path-2',
     qrCode: 'https://example.com/qrcode/2efgh',
     clicks: 305,
     status: 'inactive',
@@ -26,7 +26,7 @@ export const data = [
   {
     id: 3,
     shortLink: 'https://sho.rt/3ijkl',
-    originalLink: 'https://example.com/long-url-path-3',
+    originalLink: 'https://linkedin.com/long-url-path-3',
     qrCode: 'https://example.com/qrcode/3ijkl',
     clicks: 89,
     status: 'active',
@@ -35,7 +35,7 @@ export const data = [
   {
     id: 4,
     shortLink: 'https://sho.rt/4mnop',
-    originalLink: 'https://example.com/long-url-path-4',
+    originalLink: 'https://fb.com/long-url-path-4',
     qrCode: 'https://example.com/qrcode/4mnop',
     clicks: 150,
     status: 'active',
@@ -44,7 +44,7 @@ export const data = [
   {
     id: 5,
     shortLink: 'https://sho.rt/5qrst',
-    originalLink: 'https://example.com/long-url-path-5',
+    originalLink: 'https://www.bing.com',
     qrCode: 'https://example.com/qrcode/5qrst',
     clicks: 200,
     status: 'inactive',
@@ -53,7 +53,7 @@ export const data = [
   {
     id: 6,
     shortLink: 'https://sho.rt/6uvwx',
-    originalLink: 'https://example.com/long-url-path-6',
+    originalLink: 'https://google.com/long-url-path-6',
     qrCode: 'https://example.com/qrcode/6uvwx',
     clicks: 250,
     status: 'active',
@@ -62,7 +62,7 @@ export const data = [
   {
     id: 7,
     shortLink: 'https://sho.rt/7yzab',
-    originalLink: 'https://example.com/long-url-path-7',
+    originalLink: 'https://vercel.com/long-url-path-7',
     qrCode: 'https://example.com/qrcode/7yzab',
     clicks: 75,
     status: 'inactive',
@@ -71,7 +71,7 @@ export const data = [
   {
     id: 8,
     shortLink: 'https://sho.rt/8cdef',
-    originalLink: 'https://example.com/long-url-path-8',
+    originalLink: 'https://vercel.com/long-url-path-8',
     qrCode: 'https://example.com/qrcode/8cdef',
     clicks: 165,
     status: 'active',
@@ -80,7 +80,7 @@ export const data = [
   {
     id: 9,
     shortLink: 'https://sho.rt/9ghij',
-    originalLink: 'https://example.com/long-url-path-9',
+    originalLink: 'https://vercel.com/long-url-path-9',
     qrCode: 'https://example.com/qrcode/9ghij',
     clicks: 340,
     status: 'inactive',
@@ -89,7 +89,7 @@ export const data = [
   {
     id: 10,
     shortLink: 'https://sho.rt/10klmn',
-    originalLink: 'https://example.com/long-url-path-10',
+    originalLink: 'https://vercel.com/long-url-path-10',
     qrCode: 'https://example.com/qrcode/10klmn',
     clicks: 420,
     status: 'active',
@@ -98,7 +98,7 @@ export const data = [
   {
     id: 11,
     shortLink: 'https://sho.rt/11opqr',
-    originalLink: 'https://example.com/long-url-path-11',
+    originalLink: 'https://vercel.com/long-url-path-11',
     qrCode: 'https://example.com/qrcode/11opqr',
     clicks: 95,
     status: 'active',
@@ -107,7 +107,7 @@ export const data = [
   {
     id: 12,
     shortLink: 'https://sho.rt/12stuv',
-    originalLink: 'https://example.com/long-url-path-12',
+    originalLink: 'https://vercel.com/long-url-path-12',
     qrCode: 'https://example.com/qrcode/12stuv',
     clicks: 180,
     status: 'inactive',
@@ -116,7 +116,7 @@ export const data = [
   {
     id: 13,
     shortLink: 'https://sho.rt/13wxyz',
-    originalLink: 'https://example.com/long-url-path-13',
+    originalLink: 'https://vercel.com/long-url-path-13',
     qrCode: 'https://example.com/qrcode/13wxyz',
     clicks: 210,
     status: 'active',
@@ -125,7 +125,7 @@ export const data = [
   {
     id: 14,
     shortLink: 'https://sho.rt/14abcd',
-    originalLink: 'https://example.com/long-url-path-14',
+    originalLink: 'https://vercel.com/long-url-path-14',
     qrCode: 'https://example.com/qrcode/14abcd',
     clicks: 115,
     status: 'inactive',
@@ -134,7 +134,7 @@ export const data = [
   {
     id: 15,
     shortLink: 'https://sho.rt/15efgh',
-    originalLink: 'https://example.com/long-url-path-15',
+    originalLink: 'https://vercel.com/long-url-path-15',
     qrCode: 'https://example.com/qrcode/15efgh',
     clicks: 275,
     status: 'active',

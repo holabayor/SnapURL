@@ -1,7 +1,7 @@
 const Logo = () => {
   return (
     <div>
-      <h2 className="font-extrabold text-3xl sm:text-3xl logo-gradient">
+      <h2 className="font-extrabold text-xl sm:text-3xl logo-gradient">
         SnapURL
       </h2>
     </div>
