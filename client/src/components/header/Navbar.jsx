@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Bell, BellOff, ChevronDown, LogIn, LogOut } from 'lucide-react';
 import Button from '@/components/ui/button';
 import { user as UserData, notifications } from '@/data';
-import NotificationsPopup from '../NotificationsPopup';
-import UserPopup from '../UserPopup';
-import ThemeToggle from '../ThemeToggle';
+import NotificationsPopup from '../NotificationsPopup.jsx';
+import UserPopup from '../UserPopup.jsx';
+import ThemeToggle from '../ThemeToggle.jsx';
 
 const Navbar = () => {
   const [showUserPopup, setShowUserPopup] = useState(false);

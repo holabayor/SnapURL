@@ -1,5 +1,5 @@
 import React from 'react';
-import Popup from './ui/popup';
+import Popup from './ui/popup.jsx';
 import { Link } from 'react-router-dom';
 import { LogOut } from 'lucide-react';
 

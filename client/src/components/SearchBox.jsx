@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link as LinkIcon } from 'lucide-react';
-import Button from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
+import Button from '@/components/ui/button.jsx';
+import { Switch } from '@/components/ui/switch.jsx';
+import { Label } from '@/components/ui/label.jsx';
 
 const SearchBox = () => {
   const [isFocused, setIsFocused] = useState(false);

@@ -1,5 +1,5 @@
 import { Info } from 'lucide-react';
-import SearchBox from './SearchBox';
+import SearchBox from './SearchBox.jsx';
 
 const Hero = () => {
   return (

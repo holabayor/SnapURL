@@ -1,5 +1,5 @@
 import React from 'react';
-import Popup from './ui/popup';
+import Popup from './ui/popup.jsx';
 
 const NotificationsPopup = ({ notifications, show, onClose }) => {
   return (

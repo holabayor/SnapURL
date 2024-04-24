@@ -8,7 +8,7 @@ import {
   TableRow,
 } from './ui/table';
 import { data } from '../data';
-import CopyButton from './CopyButton';
+import CopyButton from './CopyButton.jsx';
 
 // Utility function to convert camelCase or snake_case to Normal Case
 const formatHeader = (header) => {

@@ -1,4 +1,4 @@
-import { useTheme } from '@/contexts/ThemeContext';
+import { useTheme } from '@/contexts/ThemeContext.jsx';
 import useWindowSize from '@/hooks/useWindowSize';
 import { Moon, Sun } from 'lucide-react';
 
