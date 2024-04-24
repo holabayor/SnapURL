@@ -9,7 +9,7 @@ import {
   TableRow,
 } from './ui/table';
 import { data } from '../data';
-import CopyButton from './ui/CopyButton';
+import CopyButton from './CopyButton';
 
 const formatHeader = (header) => {
   if (header === 'id') return '';
