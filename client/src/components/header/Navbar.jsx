@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Bell, BellOff, ChevronDown, LogIn, LogOut } from 'lucide-react';
-import Button from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { user as UserData, notifications } from '@/data';
 import NotificationsPopup from '../NotificationsPopup';
 import UserPopup from '../UserPopup';

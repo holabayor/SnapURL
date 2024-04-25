@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link as LinkIcon } from 'lucide-react';
-import Button from './ui/button';
+import { Button } from './ui/button';
 import { Switch } from './ui/switch';
 import { Label } from './ui/label';
 
