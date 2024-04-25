@@ -41,4 +41,4 @@ const Button = ({ className, variant, size, ...props }) => {
 };
 Button.displayName = 'Button';
 
-export default Button;
+export { Button };
