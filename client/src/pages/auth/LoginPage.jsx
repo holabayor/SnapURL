@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import { FaGithub } from 'react-icons/fa';
 import AuthLayout from './AuthLayout';
 import LoginForm from '@/components/LoginForm';
@@ -73,7 +72,7 @@ function LoginPage() {
         <LoginForm onLoginSuccess={handleLoginSuccess} />
 
         <p className="text-center text-sm mt-4 xs:mt-6 font-semibold">
-          <Link to="/auth/signup" className="underline text-blue-500">
+          <Link to="/auth/forgot-password" className="underline text-blue-500">
             Forgot your password?
           </Link>
         </p>

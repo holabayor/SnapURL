@@ -55,3 +55,38 @@ export const loginFormSchema = z.object({
       message: 'Password must contain at least one symbol',
     }),
 });
+
+export const forgotPasswordFormSchema = z.object({
+  email: z.string().email({
+    message: 'Enter a valid email address',
+  }),
+});
+
+export const otpformSchema = z.object({
+  pin: z.string().min(6, {
+    message: 'Your one-time password must be 6 characters.',
+  }),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(6, {
+        message: 'Password must be at least 6 characters',
+      })
+      .refine((password) => /[A-Z]/.test(password), {
+        message: 'Password must contain at least one uppercase letter',
+      })
+      .refine((password) => /\d/.test(password), {
+        message: 'Password must contain at least one number',
+      })
+      .refine((password) => /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password), {
+        message: 'Password must contain at least one symbol',
+      }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Password do not mtach',
+    path: ['confirmPassword'],
+  });

@@ -7,7 +7,6 @@ import { Input } from './ui/input';
 import { FaSpinner } from 'react-icons/fa';
 import { signupUser } from '@/api/apiService';
 import { SignupFormSchema } from '@/utils';
-import toast from 'react-hot-toast';
 
 const SignupForm = ({ onSubmit, isLoading }) => {
   const form = useForm({
@@ -112,7 +111,7 @@ const SignupForm = ({ onSubmit, isLoading }) => {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full px-5 rounded-sm text-base"
+            className="w-full px-5 rounded-[6px] text-base"
           >
             {isLoading ? <FaSpinner className="animate-spin mr-2" /> : 'Signup'}
           </Button>

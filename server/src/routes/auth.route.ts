@@ -25,6 +25,10 @@ class AuthRoutes {
       `${this.path}/validate-token`,
       useWrapper(this.AuthController.validateToken.bind(this.AuthController))
     );
+    this.router.post(
+      `${this.path}/validate-login`,
+      useWrapper(this.AuthController.validateToken.bind(this.AuthController))
+    );
 
     this.router.post(
       `${this.path}/refresh-token`,

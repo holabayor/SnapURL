@@ -1,36 +1,39 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
 import { Button } from './ui/button';
-import { Form, FormControl, FormField, FormItem, FormMessage } from './ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './ui/form';
 import { Input } from './ui/input';
 import { FaSpinner } from 'react-icons/fa';
-import { loginFormSchema } from '@/utils';
-import { useAuth } from '@/contexts/AuthContext';
-import toast from 'react-hot-toast';
+import { resetPassword } from '@/api/apiService';
+import { resetPasswordSchema } from '@/utils';
 
-const LoginForm = ({ onLoginSuccess }) => {
-  const { login, loading } = useAuth();
+const ResetPasswordForm = ({ onSubmit, isLoading }) => {
   const form = useForm({
-    resolver: zodResolver(loginFormSchema),
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: '',
       password: '',
+      confirmPassword: '',
     },
   });
-
-  // const loading = false;
 
   const { errors } = form.formState;
 
   const handleSubmit = async (data) => {
-    console.log(all);
     try {
-      await login(data);
-      onLoginSuccess();
+      onSubmit(true);
+      await resetPassword(data);
       form.reset();
+      onSubmit(false); // Resets the form to initial defaultValues after successful submission
     } catch (error) {
-      toast.error(error.message);
-      // console.error('Login failed:', error);
+      onSubmit(false, error);
     }
   };
 
@@ -40,30 +43,13 @@ const LoginForm = ({ onLoginSuccess }) => {
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <FormField
             control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                {/* <FormLabel>email</FormLabel> */}
-                <FormControl>
-                  <Input
-                    placeholder="Email"
-                    {...field}
-                    className={errors.email ? 'border-destructive' : ''}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
-                {/* <FormLabel>Password</FormLabel> */}
+                <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Password"
+                    placeholder="Enter new password"
                     type="password"
                     {...field}
                     className={errors.password ? 'border-destructive' : ''}
@@ -73,12 +59,36 @@ const LoginForm = ({ onLoginSuccess }) => {
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm password</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Confirm password"
+                    type="password"
+                    {...field}
+                    className={errors.password ? 'border-destructive' : ''}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <Button
             type="submit"
-            disabled={loading}
+            disabled={isLoading}
             className="w-full px-5 rounded-[6px] text-base"
           >
-            {loading ? <FaSpinner className="animate-spin mr-2" /> : 'Login'}
+            {isLoading ? (
+              <FaSpinner className="animate-spin mr-2" />
+            ) : (
+              'Reset Password'
+            )}
           </Button>
         </form>
       </Form>
@@ -86,4 +96,4 @@ const LoginForm = ({ onLoginSuccess }) => {
   );
 };
 
-export default LoginForm;
+export default ResetPasswordForm;
