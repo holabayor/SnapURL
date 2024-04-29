@@ -18,19 +18,16 @@ const LoginForm = ({ onLoginSuccess }) => {
     },
   });
 
-  // const loading = false;
-
   const { errors } = form.formState;
 
   const handleSubmit = async (data) => {
-    console.log(all);
     try {
       await login(data);
       onLoginSuccess();
       form.reset();
     } catch (error) {
       toast.error(error.message);
-      // console.error('Login failed:', error);
+      console.error('Login failed:', error);
     }
   };
 

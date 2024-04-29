@@ -27,14 +27,16 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await api.post('/auth/login', credentials);
-      console.log(response);
-      localStorage.setItem('accessToken', 'accessToken');
+      localStorage.setItem('accessToken', response.data.data.token);
       localStorage.setItem('refreshToken', 'refreshtoken');
+      setLoading(false);
+      console.log(response.data);
+      setUser(response.data.data.user);
       return response.data;
     } catch (error) {
       setLoading(false);
       // console.clear();
-      return Promise.reject(error);
+      return Promise.reject(error.response.data);
     }
   };
 

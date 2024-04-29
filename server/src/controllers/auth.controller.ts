@@ -46,7 +46,7 @@ export default class AuthController extends BaseController {
     const { email, password } = req.body;
     const data = await this.authService.login(email, password);
     res.cookie('SESSION', data.token, { httpOnly: true });
-    if (data) return this.success(res, 'Log in successful', 200, data.user);
+    if (data) return this.success(res, 'Log in successful', 200, data);
   }
 
   async validateToken(req: Request, res: Response): Promise<any> {

@@ -19,7 +19,12 @@ export class Server {
   }
 
   private initializeMiddlewares(): void {
-    this.app.use(cors());
+    const corsOptions = {
+      origin: process.env.FRONTEND_URL,
+      credentials: true,
+      optionsSuccessStatus: 200,
+    };
+    this.app.use(cors(corsOptions));
     this.app.use(morgan('dev'));
     this.app.use(express.json());
   }

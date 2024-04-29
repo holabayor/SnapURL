@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { Bell, BellOff, ChevronDown, LogIn, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { user, notifications } from '@/constants';
+import { notifications } from '@/constants';
 import NotificationsPopup from '../NotificationsPopup';
 import UserPopup from '../UserPopup';
 import ThemeToggle from '../ThemeToggle';
+import { useAuth } from '@/contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+  const { user } = useAuth();
   const [showUserPopup, setShowUserPopup] = useState(false);
   const [showBellPopup, setShowBellPopup] = useState(false);
-
-  // const user = '';
 
   return (
     <nav className="relative flex gap-2 items-center">
@@ -68,10 +69,12 @@ const Navbar = () => {
             variant={'secondary'}
             className="border-2 border-border gap-2"
           >
-            Login
+            <Link to="/auth/login">Login</Link>
             <LogIn size={16} strokeWidth={1.5} />
           </Button>
-          <Button className="hidden sm:block text-white">Register Now</Button>
+          <Button className="hidden sm:block text-white">
+            <Link to="/auth/signup">Register Now</Link>
+          </Button>
         </>
       )}
     </nav>
