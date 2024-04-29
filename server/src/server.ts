@@ -1,5 +1,7 @@
 import express, { Express, Router } from 'express';
 import http from 'http';
+import morgan from 'morgan';
+import cors from 'cors';
 import { connectDB } from './config/db';
 import routes from './routes/index';
 
@@ -17,6 +19,8 @@ export class Server {
   }
 
   private initializeMiddlewares(): void {
+    this.app.use(cors());
+    this.app.use(morgan('dev'));
     this.app.use(express.json());
   }
 

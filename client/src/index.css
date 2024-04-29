@@ -43,9 +43,8 @@
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 217.2 42.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     /* --border: 217.2 32.6% 17.5%; */
     --border: 0 0% 36%;
@@ -64,16 +63,23 @@
   body {
     font-family: 'Inter', san-serif;
     @apply bg-background text-foreground;
-    overflow-x: hidden;
+    height: 100%;
+    /* overflow-x: hidden; */
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  input[type="search"] {
+    min-width: 0;
   }
 }
 
-input[type="search"] {
-  min-width: 0;
-}
-
 .min-h-layout {
-  min-height: calc(100vh - 115px);
+  /* min-height: calc(100vh - 115px); */
 }
 
 .logo-gradient {

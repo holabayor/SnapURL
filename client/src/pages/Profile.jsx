@@ -1,16 +1,16 @@
 import React from 'react';
-import Hero from '@/components/Hero';
 import Layout from './Layout';
 
-function Home() {
+function Profile() {
   return (
     <>
       <Layout>
-        <Hero />
+        <h1>Profile Settings</h1>
+        {/* <Hero /> */}
         {/* <History /> */}
       </Layout>
     </>
   );
 }
 
-export default Home;
+export default Profile;

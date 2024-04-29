@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Bell, BellOff, ChevronDown, LogIn, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { user as UserData, notifications } from '@/data';
+import { user, notifications } from '@/constants';
 import NotificationsPopup from '../NotificationsPopup';
 import UserPopup from '../UserPopup';
 import ThemeToggle from '../ThemeToggle';
@@ -10,7 +10,7 @@ const Navbar = () => {
   const [showUserPopup, setShowUserPopup] = useState(false);
   const [showBellPopup, setShowBellPopup] = useState(false);
 
-  const user = '';
+  // const user = '';
 
   return (
     <nav className="relative flex gap-2 items-center">
@@ -20,10 +20,10 @@ const Navbar = () => {
           <Button
             onClick={() => setShowUserPopup(!showUserPopup)}
             variant={'secondary'}
-            className="text-white gap-4"
+            className="gap-4"
           >
             <span className="flex flex-col items-start">
-              <small className="text-[8px] font-thin">Welcome</small>
+              <small className="text-[8px] font-light">Welcome</small>
               <span className="leading-none">{user.firstName}</span>
             </span>
             <ChevronDown

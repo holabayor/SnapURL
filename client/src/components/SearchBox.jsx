@@ -24,7 +24,7 @@ const SearchBox = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex items-center p-1 w-full h-10 sm:h-14 md:h-16 border-2 border-border rounded-full">
+      <div className="flex items-center p-1 w-full h-10 sm:h-14 md:h-16 bg-background border-2 border-border rounded-full">
         <span className="pl-2 md:pl-6">
           <LinkIcon className="text-gray-500" size={20} strokeWidth={2} />
         </span>

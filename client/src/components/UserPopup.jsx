@@ -10,7 +10,7 @@ const UserPopup = ({ show, onClose }) => {
         <Link to={'/profile'}>Profile Settings</Link>
       </div>
       <div>
-        <Link to="#" className="flex flex-nowrap items-center gap-2">
+        <Link to="/auth/login" className="flex flex-nowrap items-center gap-2">
           Log out <LogOut size={14} strokeWidth={1.5} />
         </Link>
       </div>

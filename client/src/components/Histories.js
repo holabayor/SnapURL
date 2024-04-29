@@ -8,7 +8,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from './ui/table';
-import { data } from '../data';
+import { data } from '../constants';
 import CopyButton from './ui/CopyButton';
 
 const formatHeader = (header) => {

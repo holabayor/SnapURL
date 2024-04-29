@@ -7,7 +7,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from './ui/table';
-import { data } from '../data';
+import { data } from '../constants';
 import CopyButton from './ui/CopyButton';
 
 // Utility function to convert camelCase or snake_case to Normal Case

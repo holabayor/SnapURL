@@ -83,4 +83,12 @@ export default class AuthService {
     // delete updatedUser!.password;
     return user;
   }
+
+  validateToken(token: string) {
+    return token;
+  }
+
+  async refreshToken(refreshToken: string) {
+    return refreshToken;
+  }
 }

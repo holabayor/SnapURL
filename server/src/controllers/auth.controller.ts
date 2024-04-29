@@ -48,4 +48,27 @@ export default class AuthController extends BaseController {
     res.cookie('SESSION', data.token, { httpOnly: true });
     if (data) return this.success(res, 'Log in successful', 200, data.user);
   }
+
+  async validateToken(req: Request, res: Response): Promise<any> {
+    const { token } = req.body;
+    try {
+      const decoded = await this.authService.validateToken(token);
+      this.success(res, 'Token is valid', 200, { user: decoded });
+    } catch (error) {
+      this.error(res, 'Invalid token', 401);
+    }
+  }
+
+  async refreshToken(req: Request, res: Response): Promise<any> {
+    const { refreshToken } = req.body; // Refresh token sent in request body or headers
+    try {
+      const newToken = await this.authService.refreshToken(refreshToken);
+      res.cookie('SESSION', newToken, { httpOnly: true }); // Optionally set new token as cookie
+      this.success(res, 'Token refreshed successfully', 200, {
+        token: newToken,
+      });
+    } catch (error) {
+      this.error(res, 'Failed to refresh token', 401);
+    }
+  }
 }
