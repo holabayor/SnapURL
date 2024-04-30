@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import ResetPasswordForm from '@/components/ResetPasswordForm';
 import AuthLayout from './AuthLayout';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 function ResetPasswordPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const handleReset = async (loading, error = null) => {
-    setIsLoading(loading);
-    setError(error);
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success('Password successfully reset');
-      navigate('/auth/login');
-    }
+  const handleResetSuccess = () => {
+    toast.success('Password successfully reset');
+    navigate('/auth/login');
+  };
+
+  const handleResetError = (error) => {
+    toast.dismiss();
+    toast.error(error.message);
   };
 
   return (
@@ -27,7 +24,10 @@ function ResetPasswordPage() {
           Set a new password
         </p>
 
-        <ResetPasswordForm onSubmit={handleReset} isLoading={isLoading} />
+        <ResetPasswordForm
+          onSuccess={handleResetSuccess}
+          onError={handleResetError}
+        />
 
         <p className="text-center text-sm mt-4 xs:mt-6 font-semibold">
           <Link to="/auth/login" className="underline text-blue-500">

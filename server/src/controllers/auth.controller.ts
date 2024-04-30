@@ -27,7 +27,7 @@ export default class AuthController extends BaseController {
     const data = await this.userService.getUserById(userId);
     if (!data) return this.error(res, 'Can not retrieve UseR', 404, data);
 
-    this.success(res, 'Successfully retrieved UseR', 200, data);
+    this.success(res, 'Successfully retrieved User', 200, data);
   }
 
   async register(req: Request, res: Response): Promise<any> {
@@ -44,9 +44,11 @@ export default class AuthController extends BaseController {
     if (error) return this.error(res, error, 422);
 
     const { email, password } = req.body;
-    const data = await this.authService.login(email, password);
-    res.cookie('SESSION', data.token, { httpOnly: true });
-    if (data) return this.success(res, 'Log in successful', 200, data);
+    const { token, user } = await this.authService.login(email, password);
+    if (user) {
+      res.cookie('SESSION', token, { httpOnly: true });
+      if (user) return this.success(res, 'Log in successful', 200, user);
+    }
   }
 
   async validateToken(req: Request, res: Response): Promise<any> {
@@ -56,6 +58,16 @@ export default class AuthController extends BaseController {
       this.success(res, 'Token is valid', 200, { user: decoded });
     } catch (error) {
       this.error(res, 'Invalid token', 401);
+    }
+  }
+
+  async validateLogin(req: Request, res: Response): Promise<any> {
+    const userId = (req as any).user.id as string;
+    try {
+      const user = await this.authService.getUserById(userId);
+      this.success(res, 'Login validated', 200, user);
+    } catch (error) {
+      this.error(res, 'User logged out', 401);
     }
   }
 
@@ -69,6 +81,22 @@ export default class AuthController extends BaseController {
       });
     } catch (error) {
       this.error(res, 'Failed to refresh token', 401);
+    }
+  }
+
+  async logout(req: Request, res: Response): Promise<any> {
+    try {
+      // Clear the HTTP-only cookie
+      res.clearCookie('SESSION', {
+        httpOnly: true,
+        secure: true,
+        path: '/',
+      });
+
+      return this.success(res, 'Logged out successfully', 200);
+    } catch (error) {
+      console.error('Logout failed:', error);
+      return this.error(res, 'Failed to log out', 500);
     }
   }
 }

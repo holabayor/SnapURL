@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SignupForm from '@/components/SignupForm';
 import AuthLayout from './AuthLayout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FaGithub } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
 function SignupPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const handleSignup = async (loading, error = null) => {
-    setIsLoading(loading);
-    setError(error);
-    error && toast.error(error.message);
+  const handleResetSuccess = () => {
+    toast.success('Password successfully reset');
+    navigate('/auth/login');
+  };
+
+  const handleResetError = (error) => {
+    toast.dismiss();
+    toast.error(error.message);
   };
 
   return (
@@ -74,7 +77,7 @@ function SignupPage() {
           </div>
         </div>
 
-        <SignupForm onSubmit={handleSignup} isLoading={isLoading} />
+        <SignupForm onSuccess={handleResetSuccess} onError={handleResetError} />
       </div>
 
       <p className="text-center my-4 font-semibold"></p>

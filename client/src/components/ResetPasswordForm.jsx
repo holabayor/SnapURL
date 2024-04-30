@@ -15,7 +15,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { resetPassword } from '@/api/apiService';
 import { resetPasswordSchema } from '@/utils';
 
-const ResetPasswordForm = ({ onSubmit, isLoading }) => {
+const ResetPasswordForm = ({ onSucess, onError }) => {
   const form = useForm({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
@@ -24,23 +24,26 @@ const ResetPasswordForm = ({ onSubmit, isLoading }) => {
     },
   });
 
+  const { isSubmitting } = form;
   const { errors } = form.formState;
 
-  const handleSubmit = async (data) => {
+  const onSubmit = async (data) => {
     try {
-      onSubmit(true);
       await resetPassword(data);
+      // console.log('This should not run');
       form.reset();
-      onSubmit(false); // Resets the form to initial defaultValues after successful submission
+      onSucess();
+      onSubmit(false);
     } catch (error) {
-      onSubmit(false, error);
+      // console.log('This runs too');
+      onError(error);
     }
   };
 
   return (
     <div className="w-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="password"
@@ -62,7 +65,7 @@ const ResetPasswordForm = ({ onSubmit, isLoading }) => {
 
           <FormField
             control={form.control}
-            name="password"
+            name="confirmPassword"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Confirm password</FormLabel>
@@ -81,10 +84,10 @@ const ResetPasswordForm = ({ onSubmit, isLoading }) => {
 
           <Button
             type="submit"
-            disabled={isLoading}
+            disabled={isSubmitting}
             className="w-full px-5 rounded-[6px] text-base"
           >
-            {isLoading ? (
+            {isSubmitting ? (
               <FaSpinner className="animate-spin mr-2" />
             ) : (
               'Reset Password'

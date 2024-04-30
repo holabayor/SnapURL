@@ -4,12 +4,18 @@ import { FaGithub } from 'react-icons/fa';
 import AuthLayout from './AuthLayout';
 import LoginForm from '@/components/LoginForm';
 import { Button } from '@/components/ui/button';
+import toast from 'react-hot-toast';
 
 function LoginPage() {
   const navigate = useNavigate();
 
   const handleLoginSuccess = () => {
     navigate('/');
+  };
+
+  const handleResetError = (error) => {
+    toast.dismiss();
+    toast.error(error.message);
   };
   return (
     <AuthLayout>
@@ -69,7 +75,10 @@ function LoginPage() {
           </div>
         </div>
 
-        <LoginForm onLoginSuccess={handleLoginSuccess} />
+        <LoginForm
+          onLoginSuccess={handleLoginSuccess}
+          onError={handleResetError}
+        />
 
         <p className="text-center text-sm mt-4 xs:mt-6 font-semibold">
           <Link to="/auth/forgot-password" className="underline text-blue-500">

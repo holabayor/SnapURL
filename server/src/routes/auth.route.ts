@@ -1,6 +1,7 @@
 import express from 'express';
 import useWrapper from '../utils/wrapper';
 import AuthController from '../controllers/auth.controller';
+import isAuthenticated from '../middlewares/auth';
 
 class AuthRoutes {
   router = express.Router();
@@ -13,6 +14,11 @@ class AuthRoutes {
 
   initializeRoutes() {
     this.router.get(
+      `${this.path}/validate-login`,
+      isAuthenticated,
+      useWrapper(this.AuthController.validateLogin.bind(this.AuthController))
+    );
+    this.router.get(
       `${this.path}/:id`,
       useWrapper(this.AuthController.getUser.bind(this.AuthController))
     );
@@ -21,18 +27,18 @@ class AuthRoutes {
       `${this.path}/login`,
       useWrapper(this.AuthController.login.bind(this.AuthController))
     );
-    this.router.post(
+    this.router.get(
       `${this.path}/validate-token`,
-      useWrapper(this.AuthController.validateToken.bind(this.AuthController))
-    );
-    this.router.post(
-      `${this.path}/validate-login`,
       useWrapper(this.AuthController.validateToken.bind(this.AuthController))
     );
 
     this.router.post(
       `${this.path}/refresh-token`,
       useWrapper(this.AuthController.refreshToken.bind(this.AuthController))
+    );
+    this.router.post(
+      `${this.path}/logout`,
+      useWrapper(this.AuthController.logout.bind(this.AuthController))
     );
   }
 }

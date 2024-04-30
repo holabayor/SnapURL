@@ -32,7 +32,6 @@ api.interceptors.request.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const refreshToken = localStorage.getItem('refreshToken');
         await axios.post(
           `${import.meta.env.VITE_API_URL}/refresh-token`,
           {},

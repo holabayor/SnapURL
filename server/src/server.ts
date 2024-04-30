@@ -2,6 +2,7 @@ import express, { Express, Router } from 'express';
 import http from 'http';
 import morgan from 'morgan';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { connectDB } from './config/db';
 import routes from './routes/index';
 
@@ -25,6 +26,7 @@ export class Server {
       optionsSuccessStatus: 200,
     };
     this.app.use(cors(corsOptions));
+    this.app.use(cookieParser());
     this.app.use(morgan('dev'));
     this.app.use(express.json());
   }

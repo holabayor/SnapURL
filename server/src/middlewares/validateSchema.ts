@@ -32,7 +32,7 @@ export const loginSchema = Joi.object({
 });
 
 export const userIdSchema = Joi.object({
-  urlId: Joi.string().uuid().required(),
+  userId: Joi.string().uuid().required(),
 });
 export const userSchema = Joi.object({
   firstName: Joi.string().min(2),

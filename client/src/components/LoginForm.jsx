@@ -8,7 +8,7 @@ import { loginFormSchema } from '@/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import toast from 'react-hot-toast';
 
-const LoginForm = ({ onLoginSuccess }) => {
+const LoginForm = ({ onLoginSuccess, onError }) => {
   const { login, loading } = useAuth();
   const form = useForm({
     resolver: zodResolver(loginFormSchema),
@@ -20,21 +20,20 @@ const LoginForm = ({ onLoginSuccess }) => {
 
   const { errors } = form.formState;
 
-  const handleSubmit = async (data) => {
+  const onSubmit = async (data) => {
     try {
       await login(data);
       onLoginSuccess();
       form.reset();
     } catch (error) {
-      toast.error(error.message);
-      console.error('Login failed:', error);
+      onError(error);
     }
   };
 
   return (
     <div className="w-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="email"

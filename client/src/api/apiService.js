@@ -10,19 +10,6 @@ const signupUser = async (userData) => {
   }
 };
 
-const loginUser = async (loginCredentials) => {
-  try {
-    const response = await api.post('/auth/login', loginCredentials);
-    console.log(response);
-    localStorage.setItem('accessToken', 'accessToken');
-    localStorage.setItem('refreshToken', 'refreshtoken');
-    return response.data;
-  } catch (error) {
-    // console.clear();
-    return Promise.reject(error);
-  }
-};
-
 const forgotPassword = async (userData) => {
   try {
     const response = await api.post('/auth/forgot-password', userData);
@@ -53,4 +40,4 @@ const resetPassword = async (userData) => {
   }
 };
 
-export { signupUser, loginUser, forgotPassword, confirmOTP, resetPassword };
+export { signupUser, forgotPassword, confirmOTP, resetPassword };

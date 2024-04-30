@@ -3,7 +3,8 @@ import { comparePassword, generateToken, hashPassword } from '../utils';
 
 export default class AuthService {
   async getUserById(id: string) {
-    const user = await User.findOne({ id });
+    const user = await User.findById(id);
+    console.log('In the service ', id, user);
     if (user) return user;
     // throw new Error('User not found');
     return null;

@@ -1,38 +1,44 @@
 import { mongoose } from '../config/db';
 
-const UserSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  profilePicture: {
-    type: String,
-  },
-  urls: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Url',
+const userSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
     },
-  ],
-  lastLoggedIn: {
-    type: Date,
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    profilePicture: {
+      type: String,
+    },
+    lastLoggedIn: {
+      type: Date,
+    },
   },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
+  { timestamps: true }
+);
+
+userSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id;
+    delete ret.password;
   },
 });
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model('User', userSchema);
