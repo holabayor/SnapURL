@@ -31,6 +31,26 @@ export const loginSchema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
+export const changePasswordSchema = Joi.object({
+  oldPassword: Joi.string().min(6).required(),
+  newPassword: Joi.string()
+    .min(6)
+    .required()
+    .invalid(Joi.ref('oldPassword'))
+    .messages({
+      'any.invalid': 'New password must not be the same as the old password.',
+    }),
+});
+
+export const emailSchema = Joi.object({
+  email: Joi.string().email().required(),
+});
+
+export const resetPasswordSchema = Joi.object({
+  otpCode: Joi.string().length(6).required(),
+  newPassword: Joi.string().min(6).required(),
+});
+
 export const userIdSchema = Joi.object({
   userId: Joi.string().uuid().required(),
 });

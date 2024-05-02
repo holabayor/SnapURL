@@ -3,14 +3,20 @@ import AuthService from './../services/auth.service';
 import UserService from '../services/user.service';
 import BaseController from './base.controller';
 import {
+  changePasswordSchema,
+  emailSchema,
   loginSchema,
   registerSchema,
+  resetPasswordSchema,
   userIdSchema,
 } from '../middlewares/validateSchema';
+import { CustomRequest } from '../@types';
 
 export default class AuthController extends BaseController {
   private userService: UserService;
   private authService: AuthService;
+  private tokenName = process.env.ACCESS_TOKEN_NAME as string;
+  private pwdToken = process.env.PASSWORD_COOKIE_NAME as string;
 
   constructor() {
     super();
@@ -35,7 +41,7 @@ export default class AuthController extends BaseController {
     if (error) return this.error(res, error, 422);
 
     const data = await this.userService.createUser(req.body);
-    if (data) return this.success(res, 'Successfully shortened URL', 200, data);
+    if (data) return this.success(res, 'User created', 200, data);
     this.error(res, error.message || 'Internal Error', error.statusCode || 500);
   }
 
@@ -46,8 +52,10 @@ export default class AuthController extends BaseController {
     const { email, password } = req.body;
     const { token, user } = await this.authService.login(email, password);
     if (user) {
-      res.cookie('SESSION', token, { httpOnly: true });
-      if (user) return this.success(res, 'Log in successful', 200, user);
+      res.cookie(this.tokenName, token, {
+        httpOnly: true,
+      });
+      return this.success(res, 'Log in successful', 200, user);
     }
   }
 
@@ -75,7 +83,9 @@ export default class AuthController extends BaseController {
     const { refreshToken } = req.body; // Refresh token sent in request body or headers
     try {
       const newToken = await this.authService.refreshToken(refreshToken);
-      res.cookie('SESSION', newToken, { httpOnly: true }); // Optionally set new token as cookie
+      res.cookie(this.tokenName, newToken, {
+        httpOnly: true,
+      }); // Optionally set new token as cookie
       this.success(res, 'Token refreshed successfully', 200, {
         token: newToken,
       });
@@ -84,18 +94,67 @@ export default class AuthController extends BaseController {
     }
   }
 
+  async changePassword(req: Request, res: Response): Promise<any> {
+    const error = this.validate(changePasswordSchema, req.body);
+    if (error) return this.error(res, error, 422);
+
+    const userId = (req as any).user.id as string;
+    const { oldPassword, newPassword } = req.body;
+
+    const success = await this.authService.changePassword(
+      userId,
+      oldPassword,
+      newPassword
+    );
+    if (success) {
+      return this.success(res, 'Password changed successfully', 200);
+    }
+  }
+
+  async forgotPassword(req: Request, res: Response): Promise<any> {
+    const error = this.validate(emailSchema, req.body);
+    if (error) return this.error(res, error, 422);
+
+    const { email } = req.body;
+
+    const token = await this.authService.forgotPassword(email);
+    if (token) {
+      res.cookie(this.pwdToken, token, {
+        maxAge: 600000,
+        httpOnly: true,
+      });
+      return this.success(
+        res,
+        'Password reset link sent to mail successfully',
+        200
+      );
+    }
+  }
+
+  async resetPassword(req: Request, res: Response): Promise<any> {
+    const error = this.validate(resetPasswordSchema, req.body);
+    if (error) return this.error(res, error, 422);
+
+    const payload = (req as any).user;
+
+    const success = await this.authService.resetPassword(payload, req.body);
+    if (success) {
+      // Clear all cookies from the server to ensure a fresh login process.
+      res.clearCookie(this.pwdToken);
+      res.clearCookie(this.tokenName);
+      return this.success(res, 'Password changed successfully', 200);
+    }
+    return this.success(res, 'Invalid OTP code', 401);
+  }
+
   async logout(req: Request, res: Response): Promise<any> {
     try {
       // Clear the HTTP-only cookie
-      res.clearCookie('SESSION', {
-        httpOnly: true,
-        secure: true,
-        path: '/',
-      });
+      res.clearCookie(this.tokenName);
 
       return this.success(res, 'Logged out successfully', 200);
     } catch (error) {
-      console.error('Logout failed:', error);
+      // console.error('Logout failed:', error);
       return this.error(res, 'Failed to log out', 500);
     }
   }

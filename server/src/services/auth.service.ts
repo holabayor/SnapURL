@@ -1,10 +1,15 @@
 import User from '../models/user';
-import { comparePassword, generateToken, hashPassword } from '../utils';
+import {
+  comparePassword,
+  generateOTP,
+  generateToken,
+  hashPassword,
+} from '../utils';
+import mailService from './mailing.service';
 
 export default class AuthService {
   async getUserById(id: string) {
     const user = await User.findById(id);
-    console.log('In the service ', id, user);
     if (user) return user;
     // throw new Error('User not found');
     return null;
@@ -23,6 +28,7 @@ export default class AuthService {
 
     const hashedPassword = await hashPassword(payload.password);
     const user = await User.create({ ...payload, password: hashedPassword });
+    await mailService.sendWelcomeEmail(user.email, user.firstName);
     return user;
   }
 
@@ -47,16 +53,56 @@ export default class AuthService {
 
     const isValidPassword = await comparePassword(oldPassword, user.password);
     if (!isValidPassword)
-      throw { message: 'Invalid credentials', statusCode: 403 };
+      throw { message: 'Incorrect password', statusCode: 403 };
 
     const hashedPassword = await hashPassword(newPassword);
 
-    const upd = await User.findOneAndUpdate(
-      { id: userId },
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
       { password: hashedPassword },
       { new: true }
     );
-    return upd;
+
+    return updatedUser && true;
+  }
+
+  async forgotPassword(email: string) {
+    const user = await this.getUserByEmail(email);
+    if (!user) throw { message: 'User not found', statusCode: 404 };
+
+    // Generate OTP code
+    const code = generateOTP();
+
+    const token = await generateToken({
+      id: user._id,
+      code,
+    });
+
+    await mailService.sendResetPasswordEmail(user.email, user.firstName, code);
+
+    return token;
+    // const updatedUser = await User.findOneAndUpdate(
+    //   { _id: userId },
+    //   { password: hashedPassword },
+    //   { new: true }
+    // );
+    // return updatedUser && true;
+  }
+
+  async resetPassword(
+    payload: { id: string; code: string },
+    body: { otpCode: string; newPassword: string }
+  ) {
+    const { otpCode, newPassword } = body;
+
+    if (payload.code === otpCode) {
+      const hashedPassword: string = await hashPassword(newPassword);
+      const updatedUser = await this.updateUser(payload.id, {
+        password: hashedPassword,
+      });
+      return updatedUser && true;
+    }
+    return false;
   }
 
   async logout(email: string, password: string) {
@@ -68,21 +114,17 @@ export default class AuthService {
     return user;
   }
 
-  async updateUser(id: string, payload: any): Promise<any> {
-    const user = await this.getUserById(id);
+  async updateUser(userId: string, payload: any): Promise<any> {
+    const user = await this.getUserById(userId);
 
     if (!user) throw new Error('User not found');
 
     const updatedUser = await User.findOneAndUpdate(
-      { id },
+      { _id: userId },
       { ...payload },
       { new: true }
     );
-
-    const hashedPassword = await hashPassword(payload.password);
-    // const user = await User.create({ ...payload, hashedPassword });
-    // delete updatedUser!.password;
-    return user;
+    return updatedUser;
   }
 
   validateToken(token: string) {

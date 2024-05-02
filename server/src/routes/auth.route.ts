@@ -1,7 +1,7 @@
 import express from 'express';
 import useWrapper from '../utils/wrapper';
 import AuthController from '../controllers/auth.controller';
-import isAuthenticated from '../middlewares/auth';
+import isAuthenticated, { isAuthUser } from '../middlewares/auth';
 
 class AuthRoutes {
   router = express.Router();
@@ -36,6 +36,24 @@ class AuthRoutes {
       `${this.path}/refresh-token`,
       useWrapper(this.AuthController.refreshToken.bind(this.AuthController))
     );
+
+    this.router.post(
+      `${this.path}/change-password`,
+      isAuthenticated,
+      useWrapper(this.AuthController.changePassword.bind(this.AuthController))
+    );
+
+    this.router.post(
+      `${this.path}/forgot-password`,
+      useWrapper(this.AuthController.forgotPassword.bind(this.AuthController))
+    );
+
+    this.router.post(
+      `${this.path}/reset-password`,
+      isAuthUser,
+      useWrapper(this.AuthController.resetPassword.bind(this.AuthController))
+    );
+
     this.router.post(
       `${this.path}/logout`,
       useWrapper(this.AuthController.logout.bind(this.AuthController))

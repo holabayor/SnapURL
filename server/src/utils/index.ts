@@ -43,3 +43,8 @@ export const verifyToken = (token: string): any => {
     throw new Error('Invalid token');
   }
 };
+
+// Function to generate 6 digit OTP code
+export const generateOTP = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+};
